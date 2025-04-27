@@ -82,15 +82,6 @@ class Repository
     }
 
     /**
-     * @return Model[]
-     */
-    public function getAllWithDetails()
-    {
-        $query = $this->model->details();
-        return $this->getAll($query);
-    }
-
-    /**
      * @param int $id
      * @return Model
      */
@@ -99,31 +90,8 @@ class Repository
         if (!$this->model) {
             return;
         }
-        $data = $this->model->details()->findOrFail($id);
+        $data = $this->model->findOrFail($id);
         return $data;
-    }
-
-    /**
-     * @param string $field
-     * @param mixed $value
-     * @param string $comparator
-     * @param bool $latest
-     * @return Model
-     */
-    public function getByField(
-        $field,
-        $value,
-        $comparator = "=",
-        $latest = false
-    ) {
-        if (!$this->model) {
-            return null;
-        }
-        $data = $this->model->details()->where($field, $comparator, $value);
-        if ($latest) {
-            $data = $data->orderByDesc("id");
-        }
-        return $data->firstOrFail();
     }
 
     /**
