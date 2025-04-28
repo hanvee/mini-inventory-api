@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
+        'product_code',
         'name',
         'category',
         'price'
     ];
 
-    protected $primaryKey = 'code';
+    protected $primaryKey = 'product_code';
+    
+    protected $keyType = 'string';
+
+    public $incrementing = false;
 }

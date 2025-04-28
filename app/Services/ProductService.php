@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Enums\CategoryEnum;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Enum;
 
 class ProductService
 {
@@ -19,7 +22,7 @@ class ProductService
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
+            'category' => ['required', new Enum(CategoryEnum::class)],
             'price' => 'required|numeric|min:0',
         ]);
     }
@@ -38,7 +41,10 @@ class ProductService
     {
         $this->validateRequest($request);
 
+        $productCode = 'PRD_' . Str::upper(Str::random(6));
+
         return $this->productRepository->create([
+            'product_code' => $productCode, 
             'name' => $request->name,
             'category' => $request->category,
             'price' => $request->price,
