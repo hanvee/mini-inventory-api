@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Sale extends Model
 {
     protected $fillable = [
+        'invoice_id',
         'date',
         'customer_id',
         'subtotal'
     ];
 
     protected $primaryKey = 'invoice_id';
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
 
     protected $with = ['saleItems'];
 
@@ -23,6 +28,6 @@ class Sale extends Model
 
     public function saleItems()
     {
-        return $this->hasMany(SaleItem::class, 'invoice', 'invoice_id');
+        return $this->hasMany(SaleItem::class, 'invoice_id', 'invoice_id');
     }
 }

@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('sale_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice')->constrained('sales', 'invoice_id')->onDelete('cascade');
-            $table->foreignId('product_code')->constrained('products', 'code')->onDelete('cascade');
+            $table->string('invoice_id');
+            $table->string('product_code');
             $table->integer('qty');
             $table->timestamps();
+            
+            $table->foreign('invoice_id')
+                  ->references('invoice_id')
+                  ->on('sales')
+                  ->onDelete('cascade');
+                  
+            $table->foreign('product_code')
+                  ->references('product_code')
+                  ->on('products')
+                  ->onDelete('cascade');
         });
     }
 

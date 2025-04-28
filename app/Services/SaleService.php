@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\SaleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SaleService
 {
@@ -22,7 +23,7 @@ class SaleService
             'customer_id' => 'required|integer|exists:customers,id',
             'subtotal' => 'required|numeric|min:0',
             'items' => 'required|array|min:1',
-            'items.*.product_code' => 'required|exists:products,code',
+            'items.*.product_code' => 'required|exists:products,product_code',
             'items.*.qty' => 'required|integer|min:1',
         ]);
     }
@@ -41,8 +42,11 @@ class SaleService
     {
         $this->validateRequest($request);
 
-        return DB::transaction(function () use ($request) {
+        $invoiceCode = 'INV_' . Str::upper(Str::random(6));
+
+        return DB::transaction(function () use ($request, $invoiceCode) {
             $sale = $this->saleRepository->create([
+                'invoice_id' => $invoiceCode,
                 'date' => $request->date,
                 'customer_id' => $request->customer_id,
                 'subtotal' => $request->subtotal,

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id('invoice_id');
+            $table->string('invoice_id')->primary();
             $table->date('date');
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->decimal('subtotal', 10, 2);
