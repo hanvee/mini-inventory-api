@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\SaleRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleService
 {
@@ -20,6 +21,9 @@ class SaleService
             'date' => 'required|string|max:255',
             'customer_id' => 'required|integer|exists:customers,id',
             'subtotal' => 'required|numeric|min:0',
+            'items' => 'required|array|min:1',
+            'items.*.product_code' => 'required|exists:products,code',
+            'items.*.qty' => 'required|integer|min:1',
         ]);
     }
 
@@ -37,22 +41,51 @@ class SaleService
     {
         $this->validateRequest($request);
 
-        return $this->saleRepository->create([
-            'date' => $request->date,
-            'customer_id' => $request->customer_id,
-            'subtotal' => $request->subtotal,
-        ]);
+        return DB::transaction(function () use ($request) {
+            $sale = $this->saleRepository->create([
+                'date' => $request->date,
+                'customer_id' => $request->customer_id,
+                'subtotal' => $request->subtotal,
+            ]);
+
+            foreach ($request->items as $item) {
+                $sale->saleItems()->create([
+                    'product_code' => $item['product_code'],
+                    'qty' => $item['qty']
+                ]);
+            }
+
+            $sale->load('saleItems');
+
+            return $sale;
+        });
     }
 
     public function updateData(int $id, Request $request)
     {
         $this->validateRequest($request);
 
-        return $this->saleRepository->update($id, [
-            'date' => $request->date,
-            'customer_id' => $request->customer_id,
-            'subtotal' => $request->subtotal,
-        ]);
+        return DB::transaction(function () use ($request, $id) {
+            $sale = $this->saleRepository->update($id, [
+                'date' => $request->date,
+                'customer_id' => $request->customer_id,
+                'subtotal' => $request->subtotal,
+            ]);
+
+            $sale->saleItems()->delete();
+
+            foreach ($request->items as $item) {
+                $sale->saleItems()->create([
+                    'product_code' => $item['product_code'],
+                    'qty' => $item['qty']
+                ]);
+            }
+
+
+            $sale->load('saleItems');
+
+            return $sale;
+        });
     }
 
     public function deleteData(int $id): void

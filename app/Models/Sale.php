@@ -14,8 +14,15 @@ class Sale extends Model
 
     protected $primaryKey = 'invoice_id';
 
+    protected $with = ['saleItems'];
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function saleItems()
+    {
+        return $this->hasMany(SaleItem::class, 'invoice', 'invoice_id');
     }
 }
