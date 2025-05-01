@@ -34,7 +34,7 @@ trait ApiRequester
         }
 
         $results = [
-            "keyword" => $request->keyword,
+            "search" => $request->search,
             "per_page" => $per_page,
             "sort_by" => $sort_by,
             "sort_direction" => $sort_direction,

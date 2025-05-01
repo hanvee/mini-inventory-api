@@ -38,11 +38,11 @@ class Repository
                 $collection = $collection->orderBy($request["sort_by"]);
             }
         }
-        if ($request["keyword"]) {
+        if ($request["search"]) {
             $collection = $collection->where(
                 "name",
                 "like",
-                "%" . $request["keyword"] . "%"
+                "%" . $request["search"] . "%"
             );
         }
 
