@@ -85,7 +85,7 @@ class Repository
      * @param int $id
      * @return Model
      */
-    public function getById(int $id)
+    public function getById(int | string $id)
     {
         if (!$this->model) {
             return;
@@ -108,7 +108,7 @@ class Repository
      * @param array $payload
      * @return Model
      */
-    public function update(int $id, array $payload)
+    public function update(int | string $id, array $payload)
     {
         $data = $this->getById($id);
         $data->update($payload);
@@ -119,7 +119,7 @@ class Repository
      * @param int $id
      * @return Model
      */
-    public function delete(int $id)
+    public function delete(int | string $id)
     {
         $data = $this->getById($id);
         $data->delete();
@@ -130,7 +130,7 @@ class Repository
      * @param int $id
      * @return Model
      */
-    public function forceDelete(int $id)
+    public function forceDelete(int | string $id)
     {
         $data = $this->getById($id);
         $data->forceDelete();
@@ -141,7 +141,7 @@ class Repository
      * @param int $id
      * @return mixed
      */
-    public function restore(int $id)
+    public function restore(int | string $id)
     {
         return $this->model->withTrashed()->findOrFail($id)->restore();
     }

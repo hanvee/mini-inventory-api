@@ -23,7 +23,7 @@ class SaleController extends Controller
         return $this->collectionData($data);
     }
 
-    public function show(int $id)
+    public function show(string $id)
     {
         $data = $this->saleService->getDataById($id);
         return $this->singleData($data);
@@ -35,13 +35,13 @@ class SaleController extends Controller
         return $this->singleData($data);
     }
 
-    public function update(int $id, Request $request)
+    public function update(string $id, Request $request)
     {
         $data = $this->saleService->updateData($id, $request);
         return $this->singleData($data);
     }
 
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
         $this->saleService->deleteData($id);
         return $this->successResponse([

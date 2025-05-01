@@ -33,7 +33,7 @@ class SaleService
         return $this->saleRepository->getAll();
     }
 
-    public function getDataById(int $id)
+    public function getDataById(string $id)
     {
         return $this->saleRepository->getById($id);
     }
@@ -65,7 +65,7 @@ class SaleService
         });
     }
 
-    public function updateData(int $id, Request $request)
+    public function updateData(string $id, Request $request)
     {
         $this->validateRequest($request);
 
@@ -92,7 +92,7 @@ class SaleService
         });
     }
 
-    public function deleteData(int $id): void
+    public function deleteData(string $id): void
     {
         $this->saleRepository->delete($id);
     }

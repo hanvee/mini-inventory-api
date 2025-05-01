@@ -32,7 +32,7 @@ class ProductService
         return $this->productRepository->getAll();
     }
 
-    public function getDataById(int $id): Product
+    public function getDataById(string $id): Product
     {
         return $this->productRepository->getById($id);
     }
@@ -51,7 +51,7 @@ class ProductService
         ]);
     }
 
-    public function updateData(int $id, Request $request): Product
+    public function updateData(string $id, Request $request): Product
     {
         $this->validateRequest($request);
 
@@ -62,7 +62,7 @@ class ProductService
         ]);
     }
 
-    public function deleteData(int $id): void
+    public function deleteData(string $id): void
     {
         $this->productRepository->delete($id);
     }
