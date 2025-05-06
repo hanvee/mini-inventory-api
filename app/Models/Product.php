@@ -10,7 +10,8 @@ class Product extends Model
         'product_code',
         'name',
         'category',
-        'price'
+        'price',
+        'color'
     ];
 
     protected $primaryKey = 'product_code';

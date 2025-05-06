@@ -37,7 +37,10 @@ class Repository
             } else {
                 $collection = $collection->orderBy($request["sort_by"]);
             }
+        } else {
+            $collection = $collection->orderBy("created_at", "desc");
         }
+        
         if ($request["search"]) {
             $collection = $collection->where(
                 "name",

@@ -15,6 +15,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $categories = CategoryEnum::values();
+        $colors      = ['blue', 'red', 'cyan'];
 
         for ($i = 1; $i <= 50; $i++) {
             Product::create([
@@ -22,6 +23,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Product ' . $i,
                 'category' => $categories[array_rand($categories)],
                 'price' => mt_rand(1000, 100000) / 100,
+                'color' => $colors[array_rand($colors)]
             ]);
         }
     }

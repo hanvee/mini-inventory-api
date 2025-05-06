@@ -22,6 +22,7 @@ class CustomerService
             'name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'gender' => ['required', new Enum(GenderEnum::class)],
+            'address' => 'required|string|max:255'
         ]);
     }
 
@@ -43,6 +44,7 @@ class CustomerService
             'name' => $request->name,
             'city' => $request->city,
             'gender' => $request->gender,
+            'address' => $request->address,
         ]);
     }
 
@@ -54,6 +56,7 @@ class CustomerService
             'name' => $request->name,
             'city' => $request->city,
             'gender' => $request->gender,
+            'address' => $request->address,
         ]);
     }
 
@@ -61,4 +64,6 @@ class CustomerService
     {
         $this->customerRepository->delete($id);
     }
+
+    
 }   

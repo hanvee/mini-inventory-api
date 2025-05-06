@@ -24,6 +24,7 @@ class ProductService
             'name' => 'required|string|max:255',
             'category' => ['required', new Enum(CategoryEnum::class)],
             'price' => 'required|numeric|min:0',
+            'color' => 'required|string|max:255'
         ]);
     }
 
@@ -48,6 +49,7 @@ class ProductService
             'name' => $request->name,
             'category' => $request->category,
             'price' => $request->price,
+            'color' => $request->color
         ]);
     }
 
@@ -59,6 +61,7 @@ class ProductService
             'name' => $request->name,
             'category' => $request->category,
             'price' => $request->price,
+            'color' => $request->color
         ]);
     }
 
